@@ -27,7 +27,7 @@ module Ddb #:nodoc:
 
           # Should ActiveRecord record userstamps? Defaults to true.
           class_attribute  :record_userstamp
-          self.record_userstamp = true
+          self.record_userstamp = false
 
           # Which class is responsible for stamping? Defaults to :user.
           class_attribute  :stamper_class_name
@@ -67,6 +67,7 @@ module Ddb #:nodoc:
         # The method will automatically setup all the associations, and create <tt>before_save</tt>
         # and <tt>before_create</tt> filters for doing the stamping.
         def stampable(options = {})
+          self.record_userstamp = true
           defaults  = {
                         :stamper_class_name => :user,
                         :creator_attribute  => Ddb::Userstamp.compatibility_mode ? :created_by : :creator_id,
